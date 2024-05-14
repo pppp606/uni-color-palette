@@ -1,20 +1,22 @@
 {
   "name": "uni-color-palette",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
+  "description": "A lightweight library for managing and accessing universal color palettes.",
+  "homepage": "https://github.com/pppp606/uni-color-palette",
+  "repository": "https://github.com/pppp606/uni-color-palette",
+  "bugs": "https://github.com/pppp606/uni-color-palette/issues",
+  "author": {
+    "name": "Takuto Yuki",
+    "url": "https://github.com/pppp606/uni-color-palette"
   },
+  "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "test": "jest test",
     "eslint": "eslint --ext .ts,.tsx src",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["color","universal colors", "ui", "ux"],
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
@@ -24,5 +26,8 @@
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=16.14.0"
   }
 }
