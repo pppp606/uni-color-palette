@@ -3,4 +3,4 @@ export type ColorPalette = {
   colors: string[];
 }
 
-export type PaletteGroupName = 'PaulTol' | 'OkabeIto' | 'JapanCudo' | 'CrameriFabio';
+export type PaletteGroupName = 'PaulTol' | 'JapanCUDO';
