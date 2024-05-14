@@ -14,7 +14,8 @@
     "build": "tsc --build",
     "test": "jest test",
     "eslint": "eslint --ext .ts,.tsx src",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
+    "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "generate-examples": "ts-node tools/makeColorExamples.ts"
   },
   "keywords": [
     "color",
