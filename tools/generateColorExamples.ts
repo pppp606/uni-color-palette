@@ -27,7 +27,7 @@ paletteFiles.forEach((file) => {
   html += "\n\n";
 });
 
-const readmePath = path.resolve(__dirname, '../colorExamples.html');
+const readmePath = path.resolve(__dirname, '../docs/index.html');
 const readme = fs.readFileSync(readmePath, 'utf8');
 const replaced = readme.replace(/<!-- Color Examples -->(.|\n)*<!-- \/Color Examples -->/, `<!-- Color Examples -->\n${html}\n<!-- /Color Examples -->`);
 
