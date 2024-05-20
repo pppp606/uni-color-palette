@@ -26,7 +26,7 @@ const colors = getColorsByPaletteName('PaulTol', 'bright');
 ```
 
 ## Color Examples
-
+https://pppp606.github.io/uni-color-palette/
 
 ## Contributing
 uni-color-palette welcomes bug reports, improvement suggestions, and requests for adding new color palettes.
