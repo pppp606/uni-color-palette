@@ -10,7 +10,7 @@ const makeColorTable = (palette: ColorPalette[]) => {
     const colorBoxes = p.colors.map((color) => {
       return `<div style="background-color: ${color}; width: 40px; height: 40px;"></div>`;
     }).join('');
-    return `<div style="margin: 16px 0;"><div style="font-wigth: 400;">${colorName}</div><div style="display: flex; flex-wrap: wrap; max-width: 480px;">${colorBoxes}</div></div>`;
+    return `<div style="margin: 16px 0 32px 0;"><div style="font-wigth: 400;">${colorName}</div><div style="display: flex; flex-wrap: wrap; max-width: 480px;">${colorBoxes}</div></div>`;
   }).join('');
 }
 
@@ -22,12 +22,12 @@ let html = '';
 paletteFiles.forEach((file) => {
   const palette = require(path.resolve(palettesDir, file));
   const paletteName = Object.keys(palette)[0];
-  html += `### ${paletteName}\n`;
+  html += `<h3>${paletteName}</h3>\n`;
   html += makeColorTable(palette[paletteName]);
   html += "\n\n";
 });
 
-const readmePath = path.resolve(__dirname, '../README.md');
+const readmePath = path.resolve(__dirname, '../colorExamples.html');
 const readme = fs.readFileSync(readmePath, 'utf8');
 const replaced = readme.replace(/<!-- Color Examples -->(.|\n)*<!-- \/Color Examples -->/, `<!-- Color Examples -->\n${html}\n<!-- /Color Examples -->`);
 

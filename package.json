@@ -15,7 +15,7 @@
     "test": "jest test",
     "eslint": "eslint --ext .ts,.tsx src",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "generate-examples": "ts-node tools/makeColorExamples.ts"
+    "generate-examples": "ts-node tools/generateColorExamples.ts"
   },
   "keywords": [
     "color",
