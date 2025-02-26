@@ -5,13 +5,13 @@ uni-color-palette is a lightweight library designed to provide organized color p
 
 ## Install
 ```bash
-npm install uni-color-palette
+npm install pppp606/uni-color-palette
 ```
 
 or
 
 ```bash
-yarn add uni-color-palette
+yarn add pppp606/uni-color-palette
 ```
 
 ## Usage
