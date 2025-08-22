@@ -1,7 +1,7 @@
 {
   "name": "@pppp606/uni-color-palette",
   "version": "1.0.0",
-  "description": "A lightweight library for managing and accessing universal color palettes.",
+  "description": "A lightweight TypeScript library for managing and accessing universal color palettes with comprehensive type definitions.",
   "homepage": "https://github.com/pppp606/uni-color-palette",
   "repository": "https://github.com/pppp606/uni-color-palette",
   "bugs": "https://github.com/pppp606/uni-color-palette/issues",
@@ -10,8 +10,25 @@
     "url": "https://github.com/pppp606/uni-color-palette"
   },
   "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "tsc --build",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc -p tsconfig.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "prepublishOnly": "npm run build",
     "test": "jest test",
     "eslint": "eslint --ext .ts,.tsx src",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
@@ -21,7 +38,11 @@
     "color",
     "universal colors",
     "ui",
-    "ux"
+    "ux",
+    "typescript",
+    "types",
+    "palette",
+    "color-palette"
   ],
   "devDependencies": {
     "@types/jest": "^29.5.12",
