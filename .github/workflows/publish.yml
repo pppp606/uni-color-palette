@@ -1,4 +1,4 @@
-name: Publish to NPM
+name: Publish to GitHub Packages
 
 on:
   push:
@@ -7,55 +7,34 @@ on:
 
 jobs:
   publish:
-    name: Publish to NPM
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://npm.pkg.github.com'
           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
       
-      - name: Run tests
-        run: npm test
+      - run: npm test
       
-      - name: Build package
-        run: npm run build
+      - run: npm run build
       
       - name: Verify build outputs
         run: |
-          echo "Verifying build outputs..."
-          test -f dist/index.js || exit 1
-          test -f dist/index.d.ts || exit 1
-          test -f dist/esm/index.js || exit 1
-          echo "Build outputs verified ✅"
+          test -f dist/index.js && test -f dist/index.d.ts && test -f dist/esm/index.js
+          echo "✅ Build outputs verified"
       
-      - name: Extract version from tag
-        id: get_version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-      
-      - name: Verify package.json version matches tag
-        run: |
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          TAG_VERSION="${{ steps.get_version.outputs.version }}"
-          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
-            echo "❌ Version mismatch: package.json has $PACKAGE_VERSION but tag is $TAG_VERSION"
-            exit 1
-          fi
-          echo "✅ Version verified: $PACKAGE_VERSION"
-      
-      - name: Publish to NPM
-        run: npm publish
+      - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Create GitHub Release
         uses: actions/create-release@v1
@@ -63,22 +42,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release v${{ steps.get_version.outputs.version }}
+          release_name: Release ${{ github.ref_name }}
           body: |
-            ## Changes in v${{ steps.get_version.outputs.version }}
-            
-            🎉 New release published to NPM!
+            🎉 New release published to GitHub Packages!
             
             ### Installation
             ```bash
-            npm install @pppp606/uni-color-palette@${{ steps.get_version.outputs.version }}
+            npm install @pppp606/uni-color-palette@${{ github.ref_name }} --registry=https://npm.pkg.github.com
             ```
             
             ### Usage
             ```typescript
             import { paulTol, japanCUDO } from '@pppp606/uni-color-palette';
             
-            // Object-based API
             const lightBlue = paulTol.light[4]; // #99DDFF
             const accentRed = japanCUDO.accent[0]; // #ff4b00
             ```
