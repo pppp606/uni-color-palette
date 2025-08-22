@@ -82,14 +82,14 @@ describe('CI/CD workflow configuration', () => {
       expect(stepCommands.some((cmd: string) => cmd.includes('npm publish'))).toBe(true);
     });
 
-    it('should use npm token for authentication', () => {
+    it('should use GitHub token for authentication', () => {
       const publishJob = publishConfig.jobs?.publish;
       expect(publishJob).toBeDefined();
       
-      const hasNpmToken = publishJob.steps?.some((step: any) => 
-        step.env?.NODE_AUTH_TOKEN === '${{ secrets.NPM_TOKEN }}'
+      const hasGitHubToken = publishJob.steps?.some((step: any) => 
+        step.env?.NODE_AUTH_TOKEN === '${{ secrets.GITHUB_TOKEN }}'
       );
-      expect(hasNpmToken).toBe(true);
+      expect(hasGitHubToken).toBe(true);
     });
   });
 
@@ -107,7 +107,7 @@ describe('CI/CD workflow configuration', () => {
       const publishWorkflowPath = join(workflowsDir, 'publish.yml');
       if (existsSync(publishWorkflowPath)) {
         const content = readFileSync(publishWorkflowPath, 'utf-8');
-        expect(content).toMatch(/registry-url.*npmjs\.org/);
+        expect(content).toMatch(/registry-url.*npm\.pkg\.github\.com/);
       }
     });
   });
