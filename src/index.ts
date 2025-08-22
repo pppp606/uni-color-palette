@@ -1,7 +1,12 @@
-import { ColorPalette, PaletteGroupName } from './types';
+import { ColorPalette, PaletteGroupName, PaulTolPalettes, JapanCUDOPalettes, PaulTolPaletteNames, JapanCUDOPaletteNames } from './types';
+
+// Export types for consumers
+export type { ColorPalette, PaletteGroupName, PaulTolPalettes, JapanCUDOPalettes, PaulTolPaletteNames, JapanCUDOPaletteNames };
 import { PaulTol } from './palettes/paulTol';
 import { JapanCUDO } from './palettes/japanCUDO';
+import { transformPalettesToObject } from './utils/transformPalettes';
 
+// Legacy function-based API (kept for backward compatibility during transition)
 export const getColorsByPaletteName = (paletteGroupName: PaletteGroupName, paletteName: string): string[] | null => {
   let paletteGroup: ColorPalette[] | null = null;
   switch (paletteGroupName) {
@@ -23,3 +28,7 @@ export const getColorsByPaletteName = (paletteGroupName: PaletteGroupName, palet
     return null;
   }
 }
+
+// New object-based API exports with proper typing
+export const paulTol: PaulTolPalettes = transformPalettesToObject(PaulTol) as PaulTolPalettes;
+export const japanCUDO: JapanCUDOPalettes = transformPalettesToObject(JapanCUDO) as JapanCUDOPalettes;

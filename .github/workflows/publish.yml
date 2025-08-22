@@ -1,0 +1,62 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          cache: 'npm'
+      
+      - run: npm ci
+      
+      - run: npm test
+      
+      - run: npm run build
+      
+      - name: Verify build outputs
+        run: |
+          test -f dist/index.js && test -f dist/index.d.ts && test -f dist/esm/index.js
+          echo "✅ Build outputs verified"
+      
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            🎉 New release published to GitHub Packages!
+            
+            ### Installation
+            ```bash
+            npm install @pppp606/uni-color-palette@${{ github.ref_name }} --registry=https://npm.pkg.github.com
+            ```
+            
+            ### Usage
+            ```typescript
+            import { paulTol, japanCUDO } from '@pppp606/uni-color-palette';
+            
+            const lightBlue = paulTol.light[4]; // #99DDFF
+            const accentRed = japanCUDO.accent[0]; // #ff4b00
+            ```
+          draft: false
+          prerelease: false
